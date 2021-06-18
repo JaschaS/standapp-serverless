@@ -6,7 +6,7 @@ import { middyfy } from '@libs/lambda';
 import { createLogger } from '@libs/logger'
 
 import schema from './schema';
-import { getMember, patchMember, listAllMembers } from '@libs/database'
+import { getMember, patchMember, listAllMembers } from '@libs/member_database'
 import { Member } from 'src/models/member';
 
 const logger = createLogger('updateMember');

@@ -25,7 +25,7 @@ export default {
         "dynamodb:DeleteItem",
         "dynamodb:Query"
       ],
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.STANDAPP_TABLE}"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.MEMBERS_TABLE}"
     }
   ]
 }

@@ -4,6 +4,7 @@ import getAllMembers from '@functions/member/get_all'
 import addMember from '@functions/member/add_member'
 import deleteMember from '@functions/member/delete_member'
 import updateMember from '@functions/member/update_member'
+import currentHost from '@functions/schedule/current_host'
 
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
@@ -30,14 +31,15 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      STANDAPP_TABLE: "standapp",
+      MEMBERS_TABLE: "members",
+      HOST_TABLE: "hosts",
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { getAllMembers, addMember, deleteMember, updateMember },
+  functions: { getAllMembers, addMember, deleteMember, updateMember, currentHost },
   resources: {
     Resources: {
-      StandAppDB: {
+      MembersDB: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
             AttributeDefinitions: [
@@ -64,7 +66,29 @@ const serverlessConfiguration: AWS = {
                 ReadCapacityUnits: 1,
                 WriteCapacityUnits: 1
             },
-            TableName: "${self:provider.environment.STANDAPP_TABLE}",
+            TableName: "${self:provider.environment.MEMBERS_TABLE}",
+        }
+      },
+      HostDB: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+            AttributeDefinitions: [
+                {
+                    AttributeName: "userId",
+                    AttributeType: "S"
+                },
+            ],
+            KeySchema: [
+                {
+                    AttributeName: "userId",
+                    KeyType: "HASH"
+                },
+            ],
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 1,
+                WriteCapacityUnits: 1
+            },
+            TableName: "${self:provider.environment.HOST_TABLE}",
         }
       },
     }

@@ -5,7 +5,7 @@ import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { createLogger } from '@libs/logger'
-import { listAllMembers } from '@libs/database'
+import { listAllMembers } from '@libs/member_database'
 
 const logger = createLogger('getAllMembers')
 

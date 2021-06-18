@@ -6,7 +6,7 @@ import { middyfy } from '@libs/lambda';
 import { createLogger } from '@libs/logger'
 
 import schema from './schema';
-import { removeMember, listAllMembers } from '@libs/database'
+import { removeMember, listAllMembers } from '@libs/member_database'
 
 const logger = createLogger('deleteMember');
 

@@ -8,7 +8,7 @@ import { createLogger } from '@libs/logger'
 
 import schema from './schema';
 import { Member } from 'src/models/member';
-import { saveMember, listAllMembers } from '@libs/database'
+import { saveMember, listAllMembers } from '@libs/member_database'
 
 const logger = createLogger('addMember');
 
