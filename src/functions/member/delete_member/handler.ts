@@ -8,7 +8,7 @@ import { createLogger } from '@libs/logger'
 import schema from './schema';
 import { removeMember, listAllMembers } from '@libs/database'
 
-const logger = createLogger('addMember');
+const logger = createLogger('deleteMember');
 
 const deleteMember: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const memberId = event.body.memberId;

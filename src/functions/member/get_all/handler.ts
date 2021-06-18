@@ -7,7 +7,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda';
 import { createLogger } from '@libs/logger'
 import { listAllMembers } from '@libs/database'
 
-const logger = createLogger('getMembers')
+const logger = createLogger('getAllMembers')
 
 const getAllMembers: APIGatewayProxyHandler = async (_) => {
 

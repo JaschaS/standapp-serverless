@@ -9,7 +9,7 @@ import schema from './schema';
 import { getMember, patchMember, listAllMembers } from '@libs/database'
 import { Member } from 'src/models/member';
 
-const logger = createLogger('addMember');
+const logger = createLogger('updateMember');
 
 const updateMember: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const memberId = event.pathParameters.memberId;
