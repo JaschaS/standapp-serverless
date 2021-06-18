@@ -1,6 +1,5 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
 import getAllMembers from '@functions/member/get_all'
 import addMember from '@functions/member/add_member'
 import deleteMember from '@functions/member/delete_member'
@@ -35,7 +34,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { hello, getAllMembers, addMember, deleteMember, updateMember },
+  functions: { getAllMembers, addMember, deleteMember, updateMember },
   resources: {
     Resources: {
       StandAppDB: {
