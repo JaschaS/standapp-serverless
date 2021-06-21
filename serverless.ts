@@ -5,9 +5,12 @@ import addMember from '@functions/member/add_member'
 import deleteMember from '@functions/member/delete_member'
 import updateMember from '@functions/member/update_member'
 import currentHost from '@functions/schedule/current_host'
+import findHost from '@functions/schedule/find_host'
+import saveHost from '@functions/schedule/save_host'
 
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
+  variablesResolutionMode: "20210326",
   frameworkVersion: '2',
   custom: {
     webpack: {
@@ -33,10 +36,11 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       MEMBERS_TABLE: "members",
       HOST_TABLE: "hosts",
+      SERVER_KEY: "${ssm://standapp-key}"
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { getAllMembers, addMember, deleteMember, updateMember, currentHost },
+  functions: { getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost },
   resources: {
     Resources: {
       MembersDB: {
