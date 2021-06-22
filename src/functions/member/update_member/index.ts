@@ -9,7 +9,7 @@ export default {
         method: 'patch',
         path: 'member/{memberId}',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
         request: {
           schema: {
             'application/json': schema

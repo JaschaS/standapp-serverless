@@ -8,7 +8,7 @@ export default {
         method: 'get',
         path: 'host/current',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
       }
     }
   ],

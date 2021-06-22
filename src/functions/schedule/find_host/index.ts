@@ -8,7 +8,7 @@ export default {
         method: 'get',
         path: 'host/find',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
       }
     }
   ],

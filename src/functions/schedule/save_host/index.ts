@@ -9,7 +9,7 @@ export default {
         method: 'post',
         path: 'host/save',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
         request: {
           schema: {
             'application/json': schema

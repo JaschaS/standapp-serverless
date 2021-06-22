@@ -7,6 +7,7 @@ import updateMember from '@functions/member/update_member'
 import currentHost from '@functions/schedule/current_host'
 import findHost from '@functions/schedule/find_host'
 import saveHost from '@functions/schedule/save_host'
+import auth from '@functions/auth'
 
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
@@ -36,11 +37,11 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       MEMBERS_TABLE: "members",
       HOST_TABLE: "hosts",
-      SERVER_KEY: "${ssm://standapp-key}"
+      SERVER_KEY: "${ssm:/standapp-key}"
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost },
+  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost },
   resources: {
     Resources: {
       MembersDB: {
@@ -95,6 +96,19 @@ const serverlessConfiguration: AWS = {
             TableName: "${self:provider.environment.HOST_TABLE}",
         }
       },
+      GatewayResponseDefault4xx: {
+        Type: "AWS::ApiGateway::GatewayResponse",
+        Properties: {
+            ResponseParameters: {
+                "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+                "gatewayresponse.header.Access-Control-Allow-Headers": "'*'"
+            },
+            ResponseType: "DEFAULT_4XX",
+            RestApiId: {
+                Ref: "ApiGatewayRestApi"
+            }
+        }
+      }
     }
   }
 };

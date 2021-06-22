@@ -9,7 +9,7 @@ export default {
         method: 'delete',
         path: 'member',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
         request: {
           schema: {
             'application/json': schema

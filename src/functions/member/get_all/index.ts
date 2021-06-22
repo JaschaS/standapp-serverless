@@ -7,7 +7,7 @@ export default {
       http: {
         method: 'get',
         cors: true,
-        //authorizer: "auth",
+        authorizer: "auth",
         path: 'member'
       }
     }
