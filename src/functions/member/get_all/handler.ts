@@ -6,12 +6,13 @@ import { middyfy } from '@libs/lambda';
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import { createLogger } from '@libs/logger'
 import { listAllMembers } from '@libs/member_database'
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('getAllMembers')
 
-const getAllMembers: APIGatewayProxyHandler = async (_) => {
+const getAllMembers: APIGatewayProxyHandler = async (event) => {
 
-  const user = "jascha";
+  const user = getUserId(event.headers.Authorization);
 
   logger.info(`request all members for ${user}`);
 

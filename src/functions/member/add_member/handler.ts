@@ -9,12 +9,13 @@ import { createLogger } from '@libs/logger'
 import schema from './schema';
 import { Member } from 'src/models/member';
 import { saveMember, listAllMembers } from '@libs/member_database'
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('addMember');
 
 const addMember: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const memberId = uuidv4();
-  const user = 'jascha';
+  const user = getUserId(event.headers.Authorization);
 
   logger.info(`create new todo for user ${user} and id ${memberId}`);
 

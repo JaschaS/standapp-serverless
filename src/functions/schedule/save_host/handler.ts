@@ -8,11 +8,12 @@ import { createLogger } from '@libs/logger'
 import schema from './schema';
 import { Host } from 'src/models/host';
 import { saveNewHost } from '@libs/host_database';
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('savehost');
 
 const saveHost: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const user = 'jascha';
+  const user = getUserId(event.headers.Authorization);
   
   logger.info(`save host for user ${user} with name ${event.body.nickName}`);
 

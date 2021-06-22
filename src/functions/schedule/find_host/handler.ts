@@ -9,11 +9,12 @@ import { listAllMembers } from '@libs/member_database'
 import { getCurrentHost } from '@libs/host_database';
 import { Member } from 'src/models/member';
 import { Host } from 'src/models/host';
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('findHost');
 
-const findHost: APIGatewayProxyHandler = async (_) => {
-  const user = 'jascha';
+const findHost: APIGatewayProxyHandler = async (event) => {
+  const user = getUserId(event.headers.Authorization);
 
   logger.info(`find host for user ${user}`);
 

@@ -7,12 +7,13 @@ import { createLogger } from '@libs/logger'
 
 import schema from './schema';
 import { removeMember, listAllMembers } from '@libs/member_database'
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('deleteMember');
 
 const deleteMember: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const memberId = event.body.memberId;
-  const user = 'jascha';
+  const user = getUserId(event.headers.Authorization);
 
   logger.info(`create new todo for user ${user} and id ${memberId}`);
 

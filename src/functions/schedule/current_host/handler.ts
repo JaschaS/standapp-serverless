@@ -7,11 +7,12 @@ import { createLogger } from '@libs/logger'
 
 import { getCurrentHost } from '@libs/host_database';
 import { Host } from 'src/models/host';
+import { getUserId } from '@libs/userhandler';
 
 const logger = createLogger('currenthost');
 
-const currentHost: APIGatewayProxyHandler = async (_) => {
-  const user = 'jascha';
+const currentHost: APIGatewayProxyHandler = async (event) => {
+  const user = getUserId(event.headers.Authorization);
 
   logger.info(`current host for user ${user}`);
 
