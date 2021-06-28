@@ -3,6 +3,5 @@ export default {
   properties: {
     end: { type: 'string' },
     start: { type: 'string' },
-  },
-  required: []
+  }
 } as const;
