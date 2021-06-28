@@ -34,9 +34,9 @@ export class FindHostService {
         return {
             userId: user,
             current: availableHosts[randMember],
-            start: start.toString(),
-            end: end.getTime().toString(),
-            startAndEnd: `${start.toString()}--${end.toString()}`
+            start: start.toISOString(),
+            end: end.toISOString(),
+            startAndEnd: `${start.toISOString()}--${end.toISOString()}`
         };
     }
 

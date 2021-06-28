@@ -27,7 +27,7 @@ export class CurrentHostService {
         if(start) return start;
 
         const newStart = new Date();
-        return newStart.toString();
+        return newStart.toISOString();
     }
 
     private convertEnd(end?: string) {
@@ -35,7 +35,7 @@ export class CurrentHostService {
 
         const today = new Date(Date.now());
         const newEnd = new Date(today.getTime() + (1 * 24 * 60 * 60 * 1000));
-        return newEnd.toString();
+        return newEnd.toISOString();
     }
 
     private emptyHost(): CurrentHost {
