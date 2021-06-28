@@ -13,7 +13,8 @@ export async function patchMember(nickName: string, image: string, existing: Mem
     nickName: nickName ?? existing.nickName,
     image: image ?? existing.image,
     userId: existing.userId,
-    memberId: existing.memberId
+    memberId: existing.memberId,
+    wasHost: existing.wasHost
   };
 
   await dbClient.put({

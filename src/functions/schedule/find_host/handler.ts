@@ -5,13 +5,12 @@ import { formatJSONResponse, notFound } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 import { createLogger } from '@libs/logger'
 
-import { listAllMembers } from '@libs/member_database'
-import { getCurrentHost } from '@libs/host_database';
-import { Member } from 'src/models/member';
 import { Host } from 'src/models/host';
 import { getUserId } from '@libs/userhandler';
+import { FindHostService } from './service';
 
 const logger = createLogger('findHost');
+const service = new FindHostService();
 
 const findHost: APIGatewayProxyHandler = async (event) => {
   const user = getUserId(event.headers.Authorization);
@@ -20,7 +19,7 @@ const findHost: APIGatewayProxyHandler = async (event) => {
 
   try {
 
-    const host: Host = await getHost(user);
+    const host: Host = await service.findHost(user);
 
     return formatJSONResponse({
       ...host.current,
@@ -34,7 +33,7 @@ const findHost: APIGatewayProxyHandler = async (event) => {
 }
 
 export const main = middyfy(findHost);
-
+/*
 async function getHost(user: string): Promise<Host> {
   const members = await listAllMembers(user) as Member[];
   
@@ -78,4 +77,4 @@ function getEndDate(date: Date): Date {
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
-}
+}*/

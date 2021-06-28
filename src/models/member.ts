@@ -3,4 +3,5 @@ export interface Member {
     memberId: string;
     nickName: string;
     image: string;
+    wasHost?: boolean;
 }
