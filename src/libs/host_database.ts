@@ -25,3 +25,16 @@ export async function getCurrentHost(userId: string) : Promise<AWS.DynamoDB.Docu
 
   return results.Items;
 }
+
+export async function getHostByDate(userId: string, start: string, end: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
+  const results = await dbClient.query({
+    TableName: hostTable,
+    KeyConditionExpression: 'userId = :userId and startAndEnd = :startAndEnd',
+    ExpressionAttributeValues: {
+      ':userId': userId,
+      ':startAndEnd': `${start}--${end}`
+    }
+  }).promise();
+
+  return results.Items;
+}

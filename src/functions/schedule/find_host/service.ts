@@ -29,13 +29,14 @@ export class FindHostService {
 
         // set today for start and end +1 
         const start = new Date();
-        const end = new Date(start.getTime() + (3 * 24 * 60 * 60 * 1000));
+        const end = new Date(start.getTime() + (1 * 24 * 60 * 60 * 1000));
 
         return {
             userId: user,
             current: availableHosts[randMember],
             start: start.toString(),
             end: end.getTime().toString(),
+            startAndEnd: `${start.toString()}--${end.toString()}`
         };
     }
 
