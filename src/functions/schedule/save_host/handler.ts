@@ -26,7 +26,8 @@ const saveHost: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event
       image: event.body.image
     },
     end: event.body.end,
-    start: event.body.start
+    start: event.body.start,
+    startAndEnd: `${event.body.start}--${event.body.end}`
   }
 
   await saveNewHost(newHost)

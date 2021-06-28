@@ -9,6 +9,9 @@ import findHost from '@functions/schedule/find_host'
 import saveHost from '@functions/schedule/save_host'
 import auth from '@functions/auth'
 
+// host with time => returns a host for the given time or nothing
+// save host for given time => save host for given time. overwrites if 
+
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
   variablesResolutionMode: "20210326",
@@ -82,12 +85,20 @@ const serverlessConfiguration: AWS = {
                     AttributeName: "userId",
                     AttributeType: "S"
                 },
+                {
+                    AttributeName: "startAndEnd",
+                    AttributeType: "S"
+                },
             ],
             KeySchema: [
                 {
                     AttributeName: "userId",
                     KeyType: "HASH"
                 },
+                {
+                    AttributeName: "startAndEnd",
+                    KeyType: "RANGE"
+                }
             ],
             ProvisionedThroughput: {
                 ReadCapacityUnits: 1,
