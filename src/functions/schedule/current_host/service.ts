@@ -9,17 +9,19 @@ export class CurrentHostService {
 
     public async getCurrentHost(user: string, start?: string, end?: string): Promise<CurrentHost> {
 
-        this.logger.info(`look up for host for user ${user} for ${start} and ${end}`);
+        this.logger.info(`look up for host for user ${user} from ${start} until ${end}`);
 
         const startDate = this.convertStart(start);
         const endDate = this.convertEnd(end);
         const hostList: Host[] = await getHostByDate(user, startDate, endDate) as Host[];
 
         if(hostList.length == 0) {
+            this.logger.info(`no host find for user ${user} from ${start} until ${end}`);
             return this.emptyHost();
         }
 
         const currentHost = hostList[0];
+        this.logger.info(`host found for user ${user} -- ${currentHost}`);
 
         return {
             ...currentHost.current,
