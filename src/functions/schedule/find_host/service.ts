@@ -31,13 +31,20 @@ export class FindHostService {
         const start = new Date();
         const end = new Date(start.getTime() + (1 * 24 * 60 * 60 * 1000));
 
+        const startTime = this.splitDate(start);
+        const endTime = this.splitDate(end);
+
         return {
             userId: user,
             current: availableHosts[randMember],
-            start: start.toISOString(),
-            end: end.toISOString(),
-            startAndEnd: `${start.toISOString()}--${end.toISOString()}`
+            start: startTime,
+            end: endTime,
+            startAndEnd: `${startTime}--${endTime}`
         };
+    }
+
+    private splitDate(date: Date): string {
+        return date.toISOString().split("T")[0];
     }
 
     private getRandomInt(max: number) {
