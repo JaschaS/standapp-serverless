@@ -1,27 +1,33 @@
 
+import { createLogger } from "@libs/logger";
 import { listAllMembers, patchMember } from "@libs/member_database";
 import { Host } from "src/models/host";
 import { Member } from "src/models/member";
 
 export class FindHostService {
 
+    constructor(private logger = createLogger('findhost-service')) {}
+
     public async findHost(user: string): Promise<Host> {
 
         // list all available members
         const allMembers = await listAllMembers(user) as Member[];
         if(allMembers.length == 0) {
-            throw new Error(`find members found for user ${user}`);
+            this.logger.error(`no members found for user ${user}`);
+            throw new Error(`no members found for user ${user}`);
         }
 
         // filter out all members which where all ready host
-        const availableHosts = allMembers.filter(m => !m.wasHost);
+        let availableHosts = allMembers.filter(m => !m.wasHost);
 
         // list empty fill up list again
         if(availableHosts.length == 0) {
-            availableHosts.forEach(m => m.wasHost = false);
+            this.logger.info(`all members were already host for user user ${user} - reset`);
+            allMembers.forEach(m => m.wasHost = false);
 
             // update members without waiting to return
-            this.updateMembers(availableHosts);
+            await this.updateMembers(allMembers);
+            availableHosts = allMembers;
         }
 
         // pick one member
