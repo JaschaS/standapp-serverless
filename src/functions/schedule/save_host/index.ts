@@ -25,6 +25,13 @@ export default {
         "dynamodb:PutItem"
       ],
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.HOST_TABLE}"
+    },
+    {
+      Effect: "Allow",
+      Action: [
+        "dynamodb:PutItem"
+      ],
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.MEMBERS_TABLE}"
     }
   ]
 }

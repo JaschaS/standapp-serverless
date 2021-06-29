@@ -7,6 +7,13 @@ const XAWS = AWSXRay.captureAWS(AWS);
 const standappTable = process.env.MEMBERS_TABLE;
 const dbClient = new XAWS.DynamoDB.DocumentClient();
 
+export async function updateMember(member: Member) {
+  await dbClient.put({
+    TableName: standappTable,
+    Item: member
+  }).promise();
+}
+
 export async function patchMember(nickName: string, image: string, existing: Member) {
 
   let updatedMember: Member = {

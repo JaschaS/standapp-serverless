@@ -6,31 +6,18 @@ import { middyfy } from '@libs/lambda';
 import { createLogger } from '@libs/logger'
 
 import schema from './schema';
-import { Host } from 'src/models/host';
-import { saveNewHost } from '@libs/host_database';
 import { getUserId } from '@libs/userhandler';
+import { SaveHostService } from './service';
 
 const logger = createLogger('savehost');
+const service = new SaveHostService();
 
 const saveHost: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const user = getUserId(event.headers.Authorization);
   
   logger.info(`save host for user ${user} with name ${event.body.nickName}`);
 
-  const newHost: Host = {
-    userId: user,
-    current: {
-      userId: user,
-      memberId: event.body.memberId,
-      nickName: event.body.nickName,
-      image: event.body.image
-    },
-    end: event.body.end,
-    start: event.body.start,
-    startAndEnd: `${event.body.start}--${event.body.end}`
-  }
-
-  await saveNewHost(newHost)
+  await service.saveHost(user, event.body);
 
   return formatJSONResponse(null);
 }
