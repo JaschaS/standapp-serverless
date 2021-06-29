@@ -1,10 +1,15 @@
 import { getHostByDate } from "@libs/host_database";
 import { Host } from "src/models/host";
 import { CurrentHost } from "src/models/current_host";
+import { createLogger } from "@libs/logger";
 
 export class CurrentHostService {
 
+    constructor(private logger = createLogger('currenthost-service')) {}
+
     public async getCurrentHost(user: string, start?: string, end?: string): Promise<CurrentHost> {
+
+        this.logger.info(`look up for host for user ${user} for ${start} and ${end}`);
 
         const startDate = this.convertStart(start);
         const endDate = this.convertEnd(end);
@@ -24,14 +29,14 @@ export class CurrentHostService {
     }
 
     private convertStart(start?: string) {
-        if(start) return start;
+        if(start == null) return start;
 
         const newStart = new Date();
         return newStart.toISOString();
     }
 
     private convertEnd(end?: string) {
-        if(end) return end;
+        if(end == null) return end;
 
         const today = new Date(Date.now());
         const newEnd = new Date(today.getTime() + (1 * 24 * 60 * 60 * 1000));

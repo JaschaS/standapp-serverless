@@ -1,29 +1,40 @@
 import 'source-map-support/register';
 
-import { formatJSONResponse, notFound, ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
+import { formatJSONResponse, notFound } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
 import { createLogger } from '@libs/logger'
 
 import { getUserId } from '@libs/userhandler';
 import { CurrentHostService } from './service';
-import schema from './schema';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 
 const logger = createLogger('currenthost');
 const service = new CurrentHostService();
 
-const currentHost: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const currentHost: APIGatewayProxyHandler = async (event) => {
   const user = getUserId(event.headers.Authorization);
 
   logger.info(`current host for user ${user}`);
 
   try {
-    const currentHost = await service.getCurrentHost(user, event.body.start, event.body.end);
+    let start = null;
+    let end = null;
 
+    if(event.queryStringParameters != null) {
+      start = event.queryStringParameters.start;
+      end = event.queryStringParameters.end;
+    }
+
+    logger.info(`current host start ${start} and end ${end}`);
+
+    const currentHost = await service.getCurrentHost(user, start, end);
+    
     return formatJSONResponse({
       ...currentHost
     });
 
   } catch(e) {
+    logger.error(`an error occured - ${e}`);
     return notFound({message: e})
   }
 }
