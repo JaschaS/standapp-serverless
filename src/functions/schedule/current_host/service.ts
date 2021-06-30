@@ -3,9 +3,9 @@ import { Host } from "src/models/host";
 import { CurrentHost } from "src/models/current_host";
 import { createLogger } from "@libs/logger";
 
-
-// TODO: if start date is null generate end date as well
-// TODO: if end date is not given generate it from start date + 1
+// TODO: Save in App is not working
+// TODO: Save current host for range start until end --> query part of this and find host
+//          e.g. save 2021-06-28 until 2021-07-02 --> query: 2021-06-29 until 2021-06-30 should also return host
 
 export class CurrentHostService {
 

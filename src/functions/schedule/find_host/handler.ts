@@ -20,7 +20,7 @@ const findHost: APIGatewayProxyHandler = async (event) => {
   try {
 
     const host: Host = await service.findHost(user);
-host.current.memberId
+    
     return formatJSONResponse({
       memberId: host.current.memberId,
       image: host.current.image,
