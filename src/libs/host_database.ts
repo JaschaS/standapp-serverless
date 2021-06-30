@@ -2,6 +2,7 @@
 import * as AWS from "aws-sdk";
 import * as AWSXRay from "aws-xray-sdk";
 import { Host } from "src/models/host";
+import { HostState } from "src/models/host_state";
 
 const XAWS = AWSXRay.captureAWS(AWS);
 const hostTable = process.env.HOST_TABLE;
@@ -26,13 +27,13 @@ export async function getCurrentHost(userId: string) : Promise<AWS.DynamoDB.Docu
   return results.Items;
 }
 
-export async function getHostByDate(userId: string, start: string, end: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
+export async function getHostByDate(userId: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
   const results = await dbClient.query({
     TableName: hostTable,
-    KeyConditionExpression: 'userId = :userId and startAndEnd = :startAndEnd',
+    KeyConditionExpression: 'userId = :userId and hostState = :hostState',
     ExpressionAttributeValues: {
       ':userId': userId,
-      ':startAndEnd': `${start}--${end}`
+      ':hostState': HostState.CurrentHost
     }
   }).promise();
 

@@ -11,25 +11,14 @@ export class CurrentHostService {
 
     constructor(private logger = createLogger('currenthost-service')) {}
 
-    public async getCurrentHost(user: string, start?: string, end?: string): Promise<CurrentHost> {
+    public async getCurrentHost(user: string): Promise<CurrentHost> {
 
-        this.logger.info(`look up for host for user ${user} from ${start} until ${end}`);
+        this.logger.info(`look up for host for user ${user}`);
 
-        let startDate = start;
-        let endDate = end;
-        if(startDate == null) {
-            startDate = this.newStart();
-            endDate = this.updateEnd(startDate);
-        }
-        else {
-            if(endDate == null) {
-                endDate = this.updateEnd(startDate);
-            }
-        }
-        const hostList: Host[] = await getHostByDate(user, startDate, endDate) as Host[];
+        const hostList: Host[] = await getHostByDate(user) as Host[];
 
         if(hostList.length == 0) {
-            this.logger.info(`no host find for user ${user} from ${startDate} until ${endDate}`);
+            this.logger.info(`no host find for user ${user}`);
             return this.emptyHost();
         }
 
@@ -41,24 +30,6 @@ export class CurrentHostService {
             end: currentHost.end,
             start: currentHost.start
         };
-    }
-
-    private newStart() {
-        const newStart = new Date();
-        return this.splitDate(newStart);
-    }
-
-    private updateEnd(start: string) {
-        // use T02:00:00 because of utc time - otherwise the time may be the day before
-        // e.g. 2021-06-01T00:00:00 would be 2021-05-31T22:00:00
-
-        const today = new Date(Date.parse(`${start}T02:00:00`));
-        const newEnd = new Date(today.getTime() + (1 * 24 * 60 * 60 * 1000));
-        return this.splitDate(newEnd);
-    }
-
-    private splitDate(date: Date): string {
-        return date.toISOString().split("T")[0];
     }
 
     private emptyHost(): CurrentHost {

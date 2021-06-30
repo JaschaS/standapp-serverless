@@ -17,17 +17,7 @@ const currentHost: APIGatewayProxyHandler = async (event) => {
   logger.info(`current host for user ${user}`);
 
   try {
-    let start = null;
-    let end = null;
-
-    if(event.queryStringParameters != null) {
-      start = event.queryStringParameters.start;
-      end = event.queryStringParameters.end;
-    }
-
-    logger.info(`current host start ${start} and end ${end}`);
-
-    const currentHost = await service.getCurrentHost(user, start, end);
+    const currentHost = await service.getCurrentHost(user);
     
     return formatJSONResponse({
       ...currentHost

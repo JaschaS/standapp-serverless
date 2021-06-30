@@ -86,7 +86,7 @@ const serverlessConfiguration: AWS = {
                     AttributeType: "S"
                 },
                 {
-                    AttributeName: "startAndEnd",
+                    AttributeName: "hostState",
                     AttributeType: "S"
                 },
             ],
@@ -96,7 +96,7 @@ const serverlessConfiguration: AWS = {
                     KeyType: "HASH"
                 },
                 {
-                    AttributeName: "startAndEnd",
+                    AttributeName: "hostState",
                     KeyType: "RANGE"
                 }
             ],
