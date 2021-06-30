@@ -2,6 +2,7 @@
 import { createLogger } from "@libs/logger";
 import { listAllMembers, patchMember } from "@libs/member_database";
 import { Host } from "src/models/host";
+import { HostState } from "src/models/host_state";
 import { Member } from "src/models/member";
 
 export class FindHostService {
@@ -45,7 +46,7 @@ export class FindHostService {
             current: availableHosts[randMember],
             start: startTime,
             end: endTime,
-            startAndEnd: `${startTime}--${endTime}`
+            hostState: HostState.CurrentHost
         };
     }
 

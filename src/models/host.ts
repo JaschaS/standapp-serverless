@@ -5,5 +5,5 @@ export interface Host {
     current: Member;
     start: string;
     end: string;
-    startAndEnd: string;
+    hostState: string;
 }
