@@ -1,5 +1,6 @@
 import { getCurrentHost, saveNewHost, toHistory } from "@libs/host_database";
 import { updateMember } from "@libs/member_database";
+import { History } from "src/models/history";
 import { Host } from "src/models/host";
 import { HostState } from "src/models/host_state";
 import { Member } from "src/models/member";
@@ -19,14 +20,25 @@ export class SaveHostService {
         const currentHost = await this.retrieveCurrentHost(user);
 
         if(currentHost != null) {
-            currentHost.hostState = HostState.History;
-            await toHistory(currentHost);
+            await this.saveHistory(user, currentHost);
         }
 
         await this.saveAsNewHost(user, body);
         await this.markMemberWasHost(user, body);
     }
 
+    private async saveHistory(user: string, host: Host) {
+
+        const history: History = {
+            start: host.start,
+            end: host.end,
+            member: host.current,
+            userId: user,
+            hostState: `${HostState.History}#${host.current.memberId}`
+        };
+
+        await toHistory(history);
+    }
 
     private async retrieveCurrentHost(user: string): Promise<Host> {
         const hostList: Host[] = await getCurrentHost(user) as Host[];
