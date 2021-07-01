@@ -18,18 +18,6 @@ export async function saveNewHost(data: Host) {
 export async function getCurrentHost(userId: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
   const results = await dbClient.query({
     TableName: hostTable,
-    KeyConditionExpression: 'userId = :userId',
-    ExpressionAttributeValues: {
-      ':userId': userId
-    }
-  }).promise();
-
-  return results.Items;
-}
-
-export async function getHostByDate(userId: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
-  const results = await dbClient.query({
-    TableName: hostTable,
     KeyConditionExpression: 'userId = :userId and hostState = :hostState',
     ExpressionAttributeValues: {
       ':userId': userId,
@@ -38,4 +26,24 @@ export async function getHostByDate(userId: string) : Promise<AWS.DynamoDB.Docum
   }).promise();
 
   return results.Items;
+}
+
+export async function queryHistory(userId: string) : Promise<AWS.DynamoDB.DocumentClient.ItemList> {
+  const results = await dbClient.query({
+    TableName: hostTable,
+    KeyConditionExpression: 'userId = :userId and hostState = :hostState',
+    ExpressionAttributeValues: {
+      ':userId': userId,
+      ':hostState': HostState.History
+    }
+  }).promise();
+
+  return results.Items;
+}
+
+export async function toHistory(data: Host) {
+  await dbClient.put({
+    TableName: hostTable,
+    Item: data
+  }).promise();
 }

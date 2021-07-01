@@ -22,7 +22,8 @@ export default {
     {
       Effect: "Allow",
       Action: [
-        "dynamodb:PutItem"
+        "dynamodb:PutItem",
+        "dynamodb:Query"
       ],
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.HOST_TABLE}"
     },

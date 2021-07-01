@@ -1,4 +1,4 @@
-import { getHostByDate } from "@libs/host_database";
+import { getCurrentHost } from "@libs/host_database";
 import { Host } from "src/models/host";
 import { CurrentHost } from "src/models/current_host";
 import { createLogger } from "@libs/logger";
@@ -15,7 +15,7 @@ export class CurrentHostService {
 
         this.logger.info(`look up for host for user ${user}`);
 
-        const hostList: Host[] = await getHostByDate(user) as Host[];
+        const hostList: Host[] = await getCurrentHost(user) as Host[];
 
         if(hostList.length == 0) {
             this.logger.info(`no host find for user ${user}`);
