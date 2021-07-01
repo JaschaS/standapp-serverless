@@ -8,9 +8,7 @@ import currentHost from '@functions/schedule/current_host'
 import findHost from '@functions/schedule/find_host'
 import saveHost from '@functions/schedule/save_host'
 import auth from '@functions/auth'
-
-// host with time => returns a host for the given time or nothing
-// save host for given time => save host for given time. overwrites if 
+import history from '@functions/schedule/history'
 
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
@@ -44,7 +42,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost },
+  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost, history },
   resources: {
     Resources: {
       MembersDB: {
