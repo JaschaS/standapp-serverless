@@ -9,7 +9,7 @@ export class FindHostService {
 
     constructor(private logger = createLogger('findhost-service')) {}
 
-    public async findHost(user: string): Promise<Host> {
+    public async findHost(user: string, memberId: string): Promise<Host> {
 
         // list all available members
         const allMembers = await listAllMembers(user) as Member[];
@@ -19,7 +19,10 @@ export class FindHostService {
         }
 
         // filter out all members which where all ready host
-        let availableHosts = allMembers.filter(m => !m.wasHost);
+        // filter out the member with the given memberName
+        let availableHosts = allMembers
+            .filter(m => !m.wasHost)
+            .filter(m => m.memberId !== memberId);
 
         // list empty fill up list again
         if(availableHosts.length == 0) {

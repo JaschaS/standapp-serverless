@@ -9,6 +9,13 @@ export default {
         path: 'host/find',
         cors: true,
         authorizer: "auth",
+        request: {
+          parameters: {
+            querystrings: {
+              memberId: false
+            }
+          }
+        }  
       }
     }
   ],

@@ -14,12 +14,17 @@ const service = new FindHostService();
 
 const findHost: APIGatewayProxyHandler = async (event) => {
   const user = getUserId(event.headers.Authorization);
+  
+  let memberId = "";
+  if(event.queryStringParameters && event.queryStringParameters.memberId != null) {
+    memberId = event.queryStringParameters.memberId;
+  }
 
   logger.info(`find host for user ${user}`);
 
   try {
 
-    const host: Host = await service.findHost(user);
+    const host: Host = await service.findHost(user, memberId);
     
     return formatJSONResponse({
       memberId: host.current.memberId,
