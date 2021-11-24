@@ -8,10 +8,13 @@ import { createLogger } from '@libs/logger'
 import * as admin from 'firebase-admin';
 
 const logger = createLogger('auth')
-const serverKey = process.env.SERVER_KEY;
 
 admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(serverKey))
+  credential: admin.credential.cert({
+    projectId: process.env.PROJECT_ID,
+    privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    clientEmail: process.env.CLIENT_EMAIL,
+  })
 });
 
 const auth: APIGatewayTokenAuthorizerHandler = async (event : APIGatewayTokenAuthorizerEvent): Promise<APIGatewayAuthorizerResult> => {
