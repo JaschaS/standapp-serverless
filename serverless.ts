@@ -11,6 +11,7 @@ import privateFindHost from '@functions/private/find_host'
 import saveHost from '@functions/schedule/save_host'
 import auth from '@functions/auth'
 import history from '@functions/schedule/history'
+import privateHistory from '@functions/private/history'
 
 const serverlessConfiguration: AWS = {
   service: 'standapp-serverless',
@@ -60,7 +61,8 @@ const serverlessConfiguration: AWS = {
     saveHost, 
     history, 
     privateCurrentHost,
-    privateFindHost
+    privateFindHost,
+    privateHistory
   },
   resources: {
     Resources: {
