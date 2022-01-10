@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import getAllMembers from '@functions/member/get_all'
+import privateGetAllMembers from '@functions/private/get_all'
 import addMember from '@functions/member/add_member'
 import privateAddMember from '@functions/private/add_member'
 import deleteMember from '@functions/member/delete_member'
@@ -68,7 +69,8 @@ const serverlessConfiguration: AWS = {
     privateHistory,
     privateSaveHost,
     privateAddMember,
-    privateDeleteMember
+    privateDeleteMember,
+    privateGetAllMembers
   },
   resources: {
     Resources: {
