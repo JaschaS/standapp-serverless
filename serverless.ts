@@ -7,6 +7,7 @@ import updateMember from '@functions/member/update_member'
 import currentHost from '@functions/schedule/current_host'
 import privateCurrentHost from '@functions/private/current_host'
 import findHost from '@functions/schedule/find_host'
+import privateFindHost from '@functions/private/find_host'
 import saveHost from '@functions/schedule/save_host'
 import auth from '@functions/auth'
 import history from '@functions/schedule/history'
@@ -48,7 +49,19 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost, history, privateCurrentHost },
+  functions: { 
+    auth, 
+    getAllMembers, 
+    addMember, 
+    deleteMember, 
+    updateMember, 
+    currentHost, 
+    findHost, 
+    saveHost, 
+    history, 
+    privateCurrentHost,
+    privateFindHost
+  },
   resources: {
     Resources: {
       MembersDB: {
