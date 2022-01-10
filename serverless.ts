@@ -5,6 +5,7 @@ import addMember from '@functions/member/add_member'
 import deleteMember from '@functions/member/delete_member'
 import updateMember from '@functions/member/update_member'
 import currentHost from '@functions/schedule/current_host'
+import privateCurrentHost from '@functions/private/current_host'
 import findHost from '@functions/schedule/find_host'
 import saveHost from '@functions/schedule/save_host'
 import auth from '@functions/auth'
@@ -29,6 +30,9 @@ const serverlessConfiguration: AWS = {
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
+      apiKeys: [
+        "testKey"
+      ]
     },
     tracing: {
         lambda: true,
@@ -44,7 +48,7 @@ const serverlessConfiguration: AWS = {
     },
     lambdaHashingVersion: '20201221',
   },
-  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost, history },
+  functions: { auth, getAllMembers, addMember, deleteMember, updateMember, currentHost, findHost, saveHost, history, privateCurrentHost },
   resources: {
     Resources: {
       MembersDB: {
