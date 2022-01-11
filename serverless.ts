@@ -7,6 +7,7 @@ import privateAddMember from '@functions/private/add_member'
 import deleteMember from '@functions/member/delete_member'
 import privateDeleteMember from '@functions/private/delete_member'
 import updateMember from '@functions/member/update_member'
+import privateUpdateMember from '@functions/private/update_member'
 import currentHost from '@functions/schedule/current_host'
 import privateCurrentHost from '@functions/private/current_host'
 import findHost from '@functions/schedule/find_host'
@@ -70,7 +71,8 @@ const serverlessConfiguration: AWS = {
     privateSaveHost,
     privateAddMember,
     privateDeleteMember,
-    privateGetAllMembers
+    privateGetAllMembers,
+    privateUpdateMember
   },
   resources: {
     Resources: {
